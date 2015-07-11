@@ -10,7 +10,6 @@
 var STATIC_DATA = [
 	{title: 'Hubble Looks at Stunning Spiral', description: 'This little-known galaxy, officially named J04542829-6625280, but most often referred to as LEDA 89996, is a classic example of a spiral galaxy.', enclosure: 'http://www.nasa.gov/sites/default/files/thumbnails/image/hubble_friday_07102015.jpg'},
 	{title: 'January 19, 2006: New Horizons Launches for Pluto', description: 'On Jan. 19, 2006, Clouds part as NASA’s New Horizons spacecraft roars into the blue sky after an on-time liftoff at 2 p.m. EST aboard an Atlas V rocket from Complex 41 on Cape Canaveral Air Force Station in Florida.', enclosure: 'http://www.nasa.gov/sites/default/files/thumbnails/image/new_horizons_launch.jpg'},
-
 ];
 
 var RSS_URL = 'http://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss';

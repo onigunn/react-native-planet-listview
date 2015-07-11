@@ -7,6 +7,7 @@
 'use strict';
 
 var PlanetListView = require('./listView.js');
+
 var React = require('react-native');
 var {
   AppRegistry,
