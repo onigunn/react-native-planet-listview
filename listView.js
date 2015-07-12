@@ -7,11 +7,6 @@
 
 'use strict';
 
-var STATIC_DATA = [
-	{title: 'Hubble Looks at Stunning Spiral', description: 'This little-known galaxy, officially named J04542829-6625280, but most often referred to as LEDA 89996, is a classic example of a spiral galaxy.', enclosure: 'http://www.nasa.gov/sites/default/files/thumbnails/image/hubble_friday_07102015.jpg'},
-	{title: 'January 19, 2006: New Horizons Launches for Pluto', description: 'On Jan. 19, 2006, Clouds part as NASA’s New Horizons spacecraft roars into the blue sky after an on-time liftoff at 2 p.m. EST aboard an Atlas V rocket from Complex 41 on Cape Canaveral Air Force Station in Florida.', enclosure: 'http://www.nasa.gov/sites/default/files/thumbnails/image/new_horizons_launch.jpg'},
-];
-
 var RSS_URL = 'http://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss';
 
 var React = require('react-native');
@@ -20,7 +15,8 @@ var {
 	StyleSheet,
 	Text,
 	View,
-	ListView
+	ListView,
+	NativeModules
 } = React;
 
 var PlanetListView = React.createClass({
@@ -40,7 +36,16 @@ var PlanetListView = React.createClass({
 	},
 
 	loadRssFeed: function() {
-		this.updateDataSource(STATIC_DATA);
+		fetch(RSS_URL)
+			.then((response) => response.text())
+			.then((text) => {
+				NativeModules.OGXmlJsonParser.transformXml(text, (jsonString) => {
+					var data = JSON.parse(jsonString);
+					this.updateDataSource(data.channel.item);
+				});
+			})
+			.done();
+		
 	},
 
 	updateDataSource: function(newData) {
@@ -64,7 +69,7 @@ var PlanetListView = React.createClass({
 				<View style={styles.cellContent}>
 					<Image 
 						style={styles.enclosure}
-						source={{uri:article.enclosure}} 
+						source={{uri:article.enclosure._url}} 
 						resizeMode={Image.resizeMode.cover}
 						/>	
 					<Text style={styles.title}>{article.title}</Text>
@@ -90,7 +95,7 @@ var PlanetListView = React.createClass({
 
 var styles = StyleSheet.create({
 	container: {
-		flex: 1,
+		flex: 1, 
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'center',
